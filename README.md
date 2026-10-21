@@ -27,8 +27,14 @@ python -m pip install -e ".[mcp,dev]"      # + testler (pytest, statsmodels)
 Sürüm: powerchi 1.0.0 · Python 3.13 · scipy 1.18 · mcp 2.3 ile test edildi.
 Referans: **G*Power 3.1.9.7 (Windows)**, yalnızca resmi sayfadan: https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower
 
-`GPower.exe` SHA-256: `<buraya: PowerShell'de  Get-FileHash .\GPower.exe -Algorithm SHA256>`
-`GPower.exe` bu repoya **konmaz** (`.gitignore`).
+İncelenen dosya (resmi Windows paketi `GPowerWin_3.1.9.7.zip` içinden, sürüm bilgisi: *G\*Power 3.1.9.7, Franz Faul*):
+
+| Dosya | SHA-256 |
+|---|---|
+| `GPowerWin_3.1.9.7.zip` | `3bb7f1f2478d74ee5ba701ae7f849373cf2b8a11f6b6216c7c6b236db7861199` |
+| `GPower_3.1.9.7_143/GPowerNT.exe` | `c63e6a133eb6372932f810c08cc33dc35a06d1ddb658f897bd6c34a754efc812` |
+
+Not: Bu sürümde çalıştırılabilir dosyanın adı `GPowerNT.exe` (yönergedeki `GPower.exe` ile aynı program). Binary bu repoya **konmaz** (`.gitignore`).
 
 ## REA kontrolü
 

@@ -2,7 +2,7 @@
 
 Etiketler: **[DOK]** kılavuz/makale/yayında yazıyor · **[REA]** binary'den kanıtlandı (fonksiyon adresi ya da dize referansıyla) · **[AJAN]** ajanın çıkarımı, kanıtı yok → diferansiyel testle sınanmalı.
 
-Hedef: G*Power 3.1.9.7 (Windows), `GPower.exe` SHA-256: `<README'deki hash>` · İnceleme aracı: REA (`rea-agents`), Ghidra + JDK 21.
+Hedef: G*Power 3.1.9.7 (Windows), `GPowerNT.exe` SHA-256: `c63e6a13…c812` (README) · İnceleme aracı: REA (`rea-agents`), Ghidra + JDK 21.
 
 > **Durum:** [DOK] ve [AJAN] satırları dolduruldu. [REA] satırları, inceleme oturumu (prompts/oturum1_inceleme.md) GPower.exe üzerinde çalıştırılınca doldurulacak. Hiçbir [REA] satırı tahminle yazılmamıştır; yazılmamalıdır.
 

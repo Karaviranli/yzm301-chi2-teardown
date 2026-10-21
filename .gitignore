@@ -1,5 +1,7 @@
 # G*Power binary ASLA repoya girmez (etik kural 2)
 GPower.exe
+GPowerNT.exe
+VC_redist*.exe
 *.exe
 *.msi
 GPower*/
