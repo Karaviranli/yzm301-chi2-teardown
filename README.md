@@ -39,7 +39,20 @@ Not: Bu sürümde çalıştırılabilir dosyanın adı `GPowerNT.exe` (yönerged
 ## REA kontrolü
 
 > Ajana sorulan: "REA araçları ve Ghidra sağlayıcısı bu oturumda kullanılabilir mi?"
-> ![REA kontrolü](docs/rea_kontrol.png)
+>
+> İnceleme oturumunun (2026-10-21) cevabı: **Hayır, 0 araç.** Oturumda REA araçları ve Ghidra sağlayıcısı yüklü değildi; makinede Ghidra ve JDK 21 de yoktu. Ayrıntı: AGENT_COST.md, Oturum 1.
+
+## Teslim durumu (dürüstçe)
+
+| Parça | Durum |
+|---|---|
+| G*Power kâhini | ✅ 45 vektör, her biri ekran görüntüsüyle (`oracle/`) |
+| Diferansiyel test | ✅ `tests/UYUM_RAPORU.md` |
+| SPEC (Gherkin) | ✅ kâhine göre güncellendi (§3.7, §4, §4b, §6, §8, §9) |
+| HALLUCINATIONS | ✅ H-01…H-03 (yazım), H-11…H-14 (inceleme) |
+| LEDGER [REA] satırları | ❌ boş: REA/Ghidra kurulu değildi, adres kanıtı toplanamadı |
+| Ajan değerlendirmesi / token ölçümü | ❌ çalıştırılmadı: `ANTHROPIC_API_KEY` tanımlı değildi (kod ve 10 soruluk set hazır: `agent_eval/`) |
+| Demo videosu | ❌ yok |
 
 ## Demo
 
@@ -147,7 +160,7 @@ python oracle/gen_library_vectors.py # 630 ölçek vektörünü yeniden üretir 
 ```
 
 Üç katmanlı kâhin:
-1. `oracle/gpower_vectors.csv`: G*Power arayüzünden elle, ekran görüntüleriyle (`oracle/screenshots/`) 40 vektör: mutlu yol, sınır değerler, geçersiz girdiler, post hoc
+1. `oracle/gpower_vectors.csv`: G*Power arayüzünden elle, ekran görüntüleriyle (`oracle/screenshots/`) 45 vektör: mutlu yol, sınır değerler, geçersiz girdiler, post hoc, kesirli df (E01–E05)
 2. `oracle/dok_vectors.csv`: yayınlanmış örnekler
 3. `oracle/library_vectors.csv`: 630 vektör; bağımsız Poisson serisi + sürekli kök (pwr tarzı kesirli N). Motor 630/630 ⌈N⌉ ile eşleşiyor.
 

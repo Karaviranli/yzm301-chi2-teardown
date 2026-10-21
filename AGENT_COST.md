@@ -20,11 +20,18 @@
 
 | Alan | Değer |
 |---|---|
-| Ajan | *doldurulacak (ör. Claude Code + REA)* |
-| Yaklaşık token | *doldurulacak* |
-| Yaklaşık maliyet | *doldurulacak* |
-| İterasyon | *doldurulacak* |
-| REA araç sayısı | *"REA araçları bu oturumda kullanılabilir mi? Kaç araç aktif?" cevabı* |
+| Ajan | Claude (model `claude-opus-5-5`), Claude masaüstü uygulamasındaki Claude Code oturumu, bilgisayar kontrolü (computer use) ile |
+| REA araç sayısı | **0.** "REA araçları ve Ghidra sağlayıcısı bu oturumda kullanılabilir mi?" sorusunun cevabı: hayır; oturumda REA araçları ve Ghidra sağlayıcısı yüklü değildi, makinede Ghidra ve JDK 21 de yoktu (yalnızca Java 8). |
+| Yapılan | G*Power 3.1.9.7 arayüzüne 36 vektör girildi (31 boş vektör + kesirli df kuralını ayırmak için 5 ek), her biri ekran görüntüsüyle; diff_report çalıştırıldı; SPEC §3, §4, §6, §8, §9 kâhine göre güncellendi; HALLUCINATIONS H-11…H-14 |
+| Yaklaşık token | ≈ 300–400 bin (oturumun bağlam sayacından). Büyük kısmı ekran görüntüleri: ~85 ekran görüntüsü/yakınlaştırma |
+| Yaklaşık maliyet | Abonelik kapsamında; API fiyatıyla kabaca 5–10 USD mertebesi (tahmin) |
+| İterasyon | G*Power girişi 20 tur (tur başına 1–4 vektör); 1 tekrar ölçüm (I01, ekranda eski sonuç kalmış olabilir şüphesi); 1 not düzeltmesi (H-14) |
+| Süre | G*Power girişi ≈ 10 dakika (36 vektör) |
+
+**Neyi farklı yapardım:**
+1. REA, Ghidra ve JDK 21 kurulumunu oturumdan ÖNCE yapardım. Bu oturumda REA yoktu; LEDGER §B'deki [REA] satırları bu yüzden boş kaldı.
+2. Ekran görüntüsüyle GUI kullanmanın maliyetini burada doğrudan gördüm: her vektör ≈ 1 ekran görüntüsü + 1 yakınlaştırma. Aynı 36 vektör CLI'de birkaç yüz token tutar. Bu, sprintin "her arayüz bir maliyet transferidir" tezinin ölçülmüş örneği.
+3. Ajanın yazdığı her sayısal notu ekrandaki ikinci bir değerle çapraz kontrol ettirirdim (H-14).
 
 ## Ajan katmanı (çalışma zamanı)
 

@@ -25,12 +25,26 @@ Ajanın yanlış çıkardığı şeyler, nasıl fark edildiği ve hangi testin y
 
 ## İnceleme oturumu (Oturum 1, REA)
 
-REA/Ghidra oturumunda ajanın yanlış çıkardıkları buraya aynı biçimde eklenecek. Bakılacak tipik yerler:
+Kâhin toplama (2026-10-21) sırasında ortaya çıkanlar. İlk üçü, yazım oturumundaki ajanın SPEC'e kanıtsız koyduğu kurallardır; dördüncüsü bu oturumdaki ajanın kendi hatasıdır.
 
-* Ajanın "N'yi ceil ile yuvarlıyor" deyip adres gösteremediği yerler (L-05)
-* Hata mesajı dizesinin hangi koşula bağlı olduğu (L-11 … L-13)
-* t-testi ailesine ait bir fonksiyonu χ² hesabı sanması (aile karışıklığı)
+### H-11: "Güç ≤ α ise a priori hata verir" (SPEC §6, eski)
+* **Gerçek:** G*Power güç = α'yı kabul ediyor ve N = 1, actual power = 0,0603726 veriyor. Hata yalnızca güç < α için: "Power must be greater than or equal to alpha."
+* **Nasıl fark edildi:** I01 ekranında hata penceresi çıkmadı. Önceki B06 sonucunun ekranda kalmış olabileceği şüphesiyle, araya başka bir hesap koyup I01 yeniden hesaplandı; sonuç aynı.
+* **Yakalayan vektör:** I01 (I02 sınırın öbür tarafı). diff_report'ta N ❌.
+* **Ders:** Mesaj metni ("greater than or equal") kuralı zaten söylüyordu; ajan "≤" ile "<" farkını kendi sezgisiyle doldurmuştu.
 
-| ID | İddia | Gerçek | Nasıl fark edildi | Yakalayan test/vektör |
-|---|---|---|---|---|
-| H-1x | | | | |
+### H-12: "Kesirli df reddedilir" (SPEC §6, eski)
+* **Gerçek:** G*Power df'yi en yakın tam sayıya yuvarlıyor, .5 yukarı gidiyor; df ≥ 1 kontrolü yuvarlamadan sonra. 1,5 → 2; 2,5 → 3; 0,6 → 1; 0,4 → hata.
+* **Nasıl fark edildi:** I08'de (df=1,5) hata yerine N=108 geldi ve kritik χ² = 5,9914645, yani df=2 değeri. Kuralı ayırmak için E01–E05 vektörleri eklendi: 2,5 → 3 sonucu "çifte yuvarlama" (banker's) yorumunu eledi.
+* **Yakalayan vektör:** I08, E01–E05.
+
+### H-13: "Post hoc'ta kesirli N reddedilir" (SPEC §6, eski)
+* **Gerçek:** G*Power N'yi en yakın tam sayıya yuvarlıyor: 50,5 → 51.
+* **Yakalayan vektör:** P08.
+
+### H-14: "Post hoc'ta N=50,5 yuvarlanmadan kullanılıyor" (bu oturumun ajanı)
+* **Ajanın iddiası:** P08 ekranındaki λ = 4,59 değerini 50,5·0,09 sanıp CSV'ye "yuvarlanmadan kullanıldı" notu yazdı.
+* **Gerçek:** 50,5·0,09 = 4,545; 4,59 = 51·0,09. Güç 0,5724114 da N=51'in gücü (scipy: N=50 → 0,5641, N=50,5 → 0,5683, N=51 → 0,5724).
+* **Nasıl fark edildi:** Notu sınamak için üç N değerinde gücü bağımsız hesaplayınca ekrandaki değer yalnızca N=51 ile tuttu. Not, commit'ten önce düzeltildi.
+* **Yakalayan vektör:** P08 (ekrandaki güç, 7 basamak).
+* **Ders:** Ajanın zihinden yaptığı aritmetik de bir iddiadır; ekrandaki ikinci bir sayıyla (burada güç) çapraz kontrol edilmeden kanıt sayılmaz.

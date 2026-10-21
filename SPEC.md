@@ -32,13 +32,29 @@ güç(N) = P( χ'²(df, λ) > χ²_c )        χ'² : noncentral χ²
 3.1 Girdi: w, α, hedef güç, df.
 3.2 Güç, N'de monoton artandır.
 3.3 **Çıktı N = güç(N) ≥ hedef olan en küçük tam sayı** (kesirli N yukarı yuvarlanır; hiçbir zaman aşağı değil).
-3.4 Arama alt sınırı `N_MIN = 1`. *(L-07: G*Power'daki gerçek alt sınır kâhinle doğrulanacak; tek değiştirilecek yer `engine.N_MIN`.)*
-3.5 N 10⁸'i aşacaksa hata döner.
+3.4 Arama alt sınırı `N_MIN = 1`. Kâhinle doğrulandı: w=3 ve w=5 → N=1 (B04, B05); güç=0,051 → N=1 (B06).
+3.5 N 10⁸'i aşacaksa hata döner. (G*Power w=0,001 için N=7 848 861 veriyor (B02); bu sınırın altında.)
 3.6 "Actual power" = güç(N) (hedef değil, bulunan N'deki gerçek güç).
+3.7 **güç = α kabul edilir** (hata değildir). Arama 3.3'teki kuralla çalışır; güç(1) > α olduğundan sonuç N = 1'dir (I01: w=0,3, α=0,05, güç=0,05 → N=1, actual power 0,0603726).
 
 ## 4. Post hoc (L-09)
 
-Girdi: w, α, N (tam sayı ≥ 1), df. Çıktı: güç(N), χ²_c, λ. w = 0 kabul edilir ve güç = α olur.
+Girdi: w, α, N, df. Çıktı: güç(N), χ²_c, λ. w = 0 kabul edilir ve güç = α olur (P05).
+**Kesirli N, en yakın tam sayıya yuvarlanır (yarım yukarı)** ve hesap bu tam sayıyla yapılır: N=50,5 → 51; λ = 4,59, güç = 0,5724114 (P08). Yuvarlanmış N, `n_total` alanında döner.
+N geçerli aralığı: 1 ≤ N ≤ 2 147 483 646 (P07 mesajı).
+
+## 4b. df'nin yorumlanması (a priori ve post hoc)
+
+**Kesirli df, en yakın tam sayıya yuvarlanır; .5 yukarı gider.** Doğrulama (df ≥ 1) yuvarlamadan SONRA yapılır. Çıktıdaki `df` yuvarlanmış değerdir.
+
+| girdi df | kullanılan df | kâhin |
+|---|---|---|
+| 0,4 | 0 → hata | E05 |
+| 0,6 | 1 | E04 (N=88) |
+| 1,4 | 1 | E01 (N=88) |
+| 1,5 | 2 | I08 (N=108) |
+| 1,6 | 2 | E02 (N=108) |
+| 2,5 | 3 | E03 (N=122) |
 
 ## 5. Etki büyüklüğü (L-10)
 
@@ -47,16 +63,23 @@ Girdi: w, α, N (tam sayı ≥ 1), df. Çıktı: güç(N), χ²_c, λ. w = 0 kab
 
 ## 6. Geçersiz girdi (L-11 … L-13)
 
-| Koşul | Davranış |
-|---|---|
-| w < 0, w sayı değil / NaN / ∞ | hata |
-| w = 0 (a priori) | hata (hiçbir N yeterli değil) |
-| α ∉ (0, 1) | hata |
-| güç ∉ (0, 1) | hata |
-| güç ≤ α (a priori) | hata |
-| df tam sayı değil ya da < 1 | hata |
-| N tam sayı değil ya da < 1 (post hoc) | hata |
-| tablo 2×2'den küçük, düzensiz, negatif hücre, sıfır satır/sütun | hata |
+Kaynak: G*Power ekranındaki "Input error" pencereleri (oracle/screenshots/). G*Power'ın mesaj metni karşılaştırma için yanda verilmiştir; motorun mesajı farklı olabilir, yalnızca hata/hata-değil ayrımı ve çıkış kodu sözleşmedir.
+
+| Koşul | Davranış | G*Power mesajı | Kâhin |
+|---|---|---|---|
+| w sayı değil / NaN / ∞ | hata | — | — |
+| a priori: w ≤ 1e-6 (w = 0 ve negatif w dahil) | hata | "Effect size w must be greater 1e-06." | I03, I04 |
+| post hoc: w < 0 | hata | — | — |
+| post hoc: w = 0 | **geçerli**, güç = α | — | P05 |
+| α ∉ (0, 1) | hata | "Alpha is outside the admissible range (1e-07, 1)." | I05, I06 |
+| güç ∉ (0, 1) | hata | "Power is outside the admissible range (1e-07, 1)." | I09 |
+| güç < α (a priori) | hata | "Power must be greater than or equal to alpha." | I02 |
+| güç = α (a priori) | **geçerli**, §3.7 | — | I01 |
+| yuvarlanmış df < 1 (§4b) | hata | "Degrees of Freedom must be greater or equal one." | I07, E05 |
+| kesirli df | **geçerli**, §4b'ye göre yuvarlanır | — | I08, E01–E04 |
+| post hoc: yuvarlanmış N < 1 | hata | "Total sample size is outside the admissible range (1, 2147483646)" | P07 |
+| post hoc: kesirli N | **geçerli**, §4'e göre yuvarlanır | — | P08 |
+| tablo 2×2'den küçük, düzensiz, negatif hücre, sıfır satır/sütun | hata | — | — |
 
 ## 7. CLI sözleşmesi (L-14)
 
@@ -107,10 +130,28 @@ Feature: A priori örneklem büyüklüğü
     When mode "post-hoc", w 0.25, alpha 0.05, n 160, df 3
     Then ncp 10.0
 
-  # S-08  L-07 (alt sınır, kâhinle doğrulanacak)
+  # S-08  L-07 (alt sınır; kâhin B04)
   Scenario: Çok büyük etki
     When mode "a-priori", w 3, alpha 0.05, power 0.80, df 1
     Then n_total 1
+
+  # S-10  §3.7 (kâhin I01)
+  Scenario: Güç α'ya eşitse hata değildir
+    When mode "a-priori", w 0.3, alpha 0.05, power 0.05, df 1
+    Then n_total 1
+    And actual_power 0.0603726 (7 basamakta)
+
+  # S-11  §4b (kâhin I08, E01–E04)
+  Scenario Outline: Kesirli df en yakın tam sayıya yuvarlanır, .5 yukarı
+    When mode "a-priori", w 0.3, alpha 0.05, power 0.80, df <df>
+    Then df <dfk> and n_total <n>
+    Examples:
+      | df  | dfk | n   |
+      | 0.6 | 1   | 88  |
+      | 1.4 | 1   | 88  |
+      | 1.5 | 2   | 108 |
+      | 1.6 | 2   | 108 |
+      | 2.5 | 3   | 122 |
 
   # S-09
   Scenario: df arttıkça N artar
@@ -129,6 +170,11 @@ Feature: Post hoc güç
   Scenario: Etki yoksa güç α'dır
     When mode "post-hoc", w 0, alpha 0.05, n 100, df 1
     Then power 0.05
+
+  # S-12  §4 (kâhin P08)
+  Scenario: Kesirli N en yakın tam sayıya yuvarlanır
+    When mode "post-hoc", w 0.3, alpha 0.05, n 50.5, df 1
+    Then n_total 51 and ncp 4.59 and power 0.5724114 (7 basamakta)
 
 Feature: Etki büyüklüğü
 
@@ -149,14 +195,14 @@ Feature: Geçersiz girdi
     Then stdout tek satır {"error": "..."} ve çıkış kodu ≠ 0
     Examples:
       | girdi                                   |
-      | a-priori, power = alpha (0.05)          |
-      | a-priori, power < alpha                 |
+      | a-priori, power < alpha (0.04 < 0.05)   |
       | a-priori, w = 0                         |
       | a-priori, w = -0.1                      |
+      | post-hoc, w = -0.1                      |
       | alpha = 0 ya da 1                       |
       | power = 1                               |
-      | df = 0 ya da 1.5                        |
-      | post-hoc, n = 0 ya da 50.5              |
+      | df = 0 ya da 0.4 (yuvarlanınca 0)       |
+      | post-hoc, n = 0 ya da 0.4               |
       | eksik parametre, bilinmeyen bayrak      |
       | bilinmeyen mod ya da test ailesi        |
 
@@ -171,9 +217,14 @@ Feature: Ölçek ve parite
     Then MCP aracının JSON çıktısı CLI çıktısıyla birebir aynıdır (hata mesajları dahil)
 ```
 
-## 9. Açık sorular (REA ile kapatılacak)
+## 9. Açık sorular
 
-1. G*Power N aramasına kaçtan başlıyor? (S-08 / L-07)
-2. Güç ≤ α, w = 0, kesirli df, kesirli N için G*Power hata mı veriyor, sessizce düzeltiyor mu? Mesaj metni ne? (L-11 … L-13)
-3. Durma koşulu: tam sayı taraması mı, kesirli kök + `ceil` mi? Kayan nokta sınırında (güç tam hedefe eşit) hangisi seçiliyor? (L-06)
-4. G*Power'ın N üst sınırı var mı? (B02)
+Kâhinle (G*Power ekranı, 2026-10-21) kapatılanlar:
+
+1. ~~N aramasına kaçtan başlıyor?~~ N = 1 (B04, B05, B06, I01). §3.4.
+2. ~~Güç ≤ α, w = 0, kesirli df, kesirli N?~~ güç < α hata, güç = α geçerli; a priori w ≤ 1e-6 hata, post hoc w = 0 geçerli; kesirli df ve kesirli N en yakın tam sayıya yuvarlanır. §3.7, §4, §4b, §6.
+3. ~~N üst sınırı?~~ w = 0,001 için N = 7 848 861 hesaplanıyor (B02); pratik vektörlerde üst sınıra takılma yok.
+
+Açık kalan:
+
+4. Durma koşulu: kesirli kök + `ceil` mi, tam sayı taraması mı? Kâhinin 23 a priori vektörü ve 630 kütüphane vektörü iki yorumda da aynı N'yi veriyor; fark yalnızca güç(N) hedefe 1e-10 mertebesinde eşit olduğunda görülebilir. Motor tam sayı taramasında kalır.
