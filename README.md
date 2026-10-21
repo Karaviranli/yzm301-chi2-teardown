@@ -52,11 +52,11 @@ Not: Bu sürümde çalıştırılabilir dosyanın adı `GPowerNT.exe` (yönerged
 | HALLUCINATIONS | ✅ H-01…H-03 (yazım), H-11…H-14 (inceleme) |
 | LEDGER [REA] satırları | ❌ boş: REA/Ghidra kurulu değildi, adres kanıtı toplanamadı |
 | Ajan değerlendirmesi / token ölçümü | ❌ çalıştırılmadı: `ANTHROPIC_API_KEY` tanımlı değildi (kod ve 10 soruluk set hazır: `agent_eval/`) |
-| Demo videosu | ❌ yok |
+| Demo videosu | ✅ `docs/demo.mp4` (60 sn) |
 
 ## Demo
 
-60 saniyelik CLI videosu: `<video linki>`
+60 saniyelik CLI videosu: [docs/demo.mp4](docs/demo.mp4) (repoda; GitHub'da dosyaya tıklayınca oynatılır). Komutlar gerçekten çalıştırılıp çıktıları kaydedildi; görüntü `docs/make_demo.py` ile çizildi, yeniden üretmek için: `python docs/make_demo.py`. İçerik: a priori, post hoc, güç = α sınırı, kesirli df, geçersiz girdi (çıkış kodu 2), etki büyüklüğü, `pytest` (93 geçen), `diff_report` (37/37).
 
 ---
 
