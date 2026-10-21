@@ -16,6 +16,13 @@ Hedef: G*Power 3.1.9.7 (Windows), `GPowerNT.exe` SHA-256: `c63e6a13…c812` (REA
 | L-04 | df = (satır−1)(sütun−1) | Kılavuz / standart istatistik | `test_w_three_groups_df` |
 | L-10 | w = √Σ(p1−p0)²/p0; olumsallıkta p0 = marjinallerin çarpımı | Cohen (1988) §7.2; kılavuzdaki "Determine" penceresi | `test_w_from_table_*` |
 
+## A2. G*Power kâhiniyle doğrulanan davranış
+
+| ID | İddia | Kanıt | Durum |
+|---|---|---|---|
+| K-01 | A priori N, güç ≥ hedef olan en küçük tam sayı (yukarı yuvarlama) | G01–G09 ekran görüntüleri; 9/9 vektörde N ve 7 basamakta λ, χ²c, güç eşleşiyor (tests/UYUM_RAPORU.md) | Kâhinle doğrulandı; kod düzeyinde [REA] kanıtı L-05'te bekleniyor |
+| K-02 | G*Power çıktıları 7 ondalıkla gösterir | Tüm ekran görüntüleri | A-02 kapandı: karşılaştırma 7 basamakla yapılıyor |
+
 ## B. Kılavuzda OLMAYAN davranış: [REA] ile kanıtlanacak
 
 Puan bu bölümden gelir. Her satır için: fonksiyon adresi (`FUN_00xxxxxx` ya da sembol), dize referansı (adres + kısa alıntı), güven ve hâlâ bilinmeyen.
@@ -35,7 +42,7 @@ Puan bu bölümden gelir. Her satır için: fonksiyon adresi (`FUN_00xxxxxx` ya 
 
 | ID | Çıkarım | Neden şüpheli | Durum |
 |---|---|---|---|
-| A-01 | G04 (w=0,3, df=5, α=0,05, güç=0,95 → N=220) "kılavuzdaki örnek" | Yazım oturumundaki ajan bunu bellekten hatırladı, kaynak gösteremedi | [DOK]'a alınmadı; G*Power ekranından G04 ile doğrulanacak |
+| A-01 | G04 (w=0,3, df=5, α=0,05, güç=0,95 → N=220) "kılavuzdaki örnek" | Yazım oturumundaki ajan bunu bellekten hatırladı, kaynak gösteremedi | ✅ **G*Power ekranında doğrulandı** (oracle/screenshots/G04.jpg): N=220, λ=19,8000000, χ²c=11,0704977, güç=0,9502155. Kaynak artık kâhin, kılavuz değil |
 | A-02 | Çıktı 4 ondalığa yuvarlanır | Sözleşme örneği 4 basamak kullanıyor; G*Power ekranı daha fazla basamak gösterebilir | diff_report, G*Power'ın gösterdiği basamağa göre karşılaştırır (`--precision 7`) |
 | A-03 | `--tails` χ² için yok sayılmalı | Değerlendirme düzeneği tüm ailelere aynı bayrakları gönderebilir | Sözleşme testi var; hocaya sorulabilir |
 
