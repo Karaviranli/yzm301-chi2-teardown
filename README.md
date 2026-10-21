@@ -47,7 +47,7 @@ Not: Bu sürümde çalıştırılabilir dosyanın adı `GPowerNT.exe` (yönerged
 | Parça | Durum |
 |---|---|
 | G*Power kâhini | ✅ 45 vektör, her biri ekran görüntüsüyle (`oracle/`) |
-| Diferansiyel test | ✅ `tests/UYUM_RAPORU.md` |
+| Diferansiyel test | ✅ `tests/UYUM_RAPORU.md`: a priori N **37/37 = %100** (kapı %90), tüm alanlar 45/45; 93 test geçiyor |
 | SPEC (Gherkin) | ✅ kâhine göre güncellendi (§3.7, §4, §4b, §6, §8, §9) |
 | HALLUCINATIONS | ✅ H-01…H-03 (yazım), H-11…H-14 (inceleme) |
 | LEDGER [REA] satırları | ❌ boş: REA/Ghidra kurulu değildi, adres kanıtı toplanamadı |
