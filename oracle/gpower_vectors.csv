@@ -8,34 +8,39 @@ G06,mutlu-yol,a-priori,0.3,0.01,0.8,,3,172,0.8007649,11.3448667,15.4800000,,scre
 G07,mutlu-yol,a-priori,0.2,0.05,0.8,,4,299,0.8009293,9.4877290,11.9600000,,screenshots/G07.jpg,3x3 tablo
 G08,mutlu-yol,a-priori,0.1,0.05,0.95,,1,1300,0.9500756,3.8414588,13.0000000,,screenshots/G08.jpg,
 G09,mutlu-yol,a-priori,0.5,0.01,0.99,,1,97,0.9905779,6.6348966,24.2500000,,screenshots/G09.jpg,
-G10,mutlu-yol,a-priori,0.3,0.1,0.8,,1,,,,,,screenshots/G10.jpg,
-G11,mutlu-yol,a-priori,0.25,0.05,0.9,,6,,,,,,screenshots/G11.jpg,
-G12,mutlu-yol,a-priori,0.4,0.05,0.8,,9,,,,,,screenshots/G12.jpg,4x4 tablo
-B01,sinir-w-kucuk,a-priori,0.01,0.05,0.8,,1,,,,,,screenshots/B01.jpg,d çok küçük karşılığı
-B02,sinir-w-kucuk,a-priori,0.001,0.05,0.8,,1,,,,,,screenshots/B02.jpg,G*Power üst N sınırı var mı?
-B03,sinir-w-buyuk,a-priori,2,0.05,0.8,,1,,,,,,screenshots/B03.jpg,N=2 bekleniyor
-B04,sinir-w-buyuk,a-priori,3,0.05,0.8,,1,,,,,,screenshots/B04.jpg,N=1 mi? alt sınır testi (LEDGER L-07)
-B05,sinir-w-buyuk,a-priori,5,0.05,0.8,,1,,,,,,screenshots/B05.jpg,N alt sınırı
-B06,sinir-guc,a-priori,0.3,0.05,0.051,,1,,,,,,screenshots/B06.jpg,güç α'nın hemen üstünde
-B07,sinir-guc,a-priori,0.3,0.05,0.999,,1,,,,,,screenshots/B07.jpg,
-B08,sinir-alfa,a-priori,0.3,0.001,0.8,,1,,,,,,screenshots/B08.jpg,
-B09,sinir-alfa,a-priori,0.3,0.5,0.8,,1,,,,,,screenshots/B09.jpg,büyük α
-B10,sinir-df,a-priori,0.3,0.05,0.8,,20,,,,,,screenshots/B10.jpg,
-B11,sinir-df,a-priori,0.3,0.05,0.8,,50,,,,,,screenshots/B11.jpg,
-I01,gecersiz,a-priori,0.3,0.05,0.05,,1,,,,,,screenshots/I01.jpg,güç = α: G*Power ne yapıyor?
-I02,gecersiz,a-priori,0.3,0.05,0.04,,1,,,,,,screenshots/I02.jpg,güç < α
-I03,gecersiz,a-priori,0,0.05,0.8,,1,,,,,,screenshots/I03.jpg,w = 0
-I04,gecersiz,a-priori,-0.1,0.05,0.8,,1,,,,,,screenshots/I04.jpg,negatif w
-I05,gecersiz,a-priori,0.3,0,0.8,,1,,,,,,screenshots/I05.jpg,α = 0
-I06,gecersiz,a-priori,0.3,1,0.8,,1,,,,,,screenshots/I06.jpg,α = 1
-I07,gecersiz,a-priori,0.3,0.05,0.8,,0,,,,,,screenshots/I07.jpg,df = 0
-I08,gecersiz,a-priori,0.3,0.05,0.8,,1.5,,,,,,screenshots/I08.jpg,"kesirli df: G*Power yuvarlıyor mu, reddediyor mu?"
-I09,gecersiz,a-priori,0.3,0.05,1,,1,,,,,,screenshots/I09.jpg,güç = 1
-P01,post-hoc,post-hoc,0.3,0.05,,88,1,,,,,,screenshots/P01.jpg,G01'in tersi
-P02,post-hoc,post-hoc,0.3,0.05,,50,2,,,,,,screenshots/P02.jpg,
-P03,post-hoc,post-hoc,0.1,0.05,,100,1,,,,,,screenshots/P03.jpg,
-P04,post-hoc,post-hoc,0.5,0.05,,10,3,,,,,,screenshots/P04.jpg,
-P05,post-hoc-sinir,post-hoc,0,0.05,,100,1,,,,,,screenshots/P05.jpg,w=0: güç = α mı?
-P06,post-hoc-sinir,post-hoc,0.3,0.05,,1,1,,,,,,screenshots/P06.jpg,N=1
-P07,post-hoc-gecersiz,post-hoc,0.3,0.05,,0,1,,,,,,screenshots/P07.jpg,N=0
-P08,post-hoc-gecersiz,post-hoc,0.3,0.05,,50.5,1,,,,,,screenshots/P08.jpg,kesirli N
+G10,mutlu-yol,a-priori,0.3,0.1,0.8,,1,69,0.8015573,2.7055435,6.2100000,,screenshots/G10.jpg,
+G11,mutlu-yol,a-priori,0.25,0.05,0.9,,6,279,0.9003601,12.5915872,17.4375000,,screenshots/G11.jpg,
+G12,mutlu-yol,a-priori,0.4,0.05,0.8,,9,98,0.8009345,16.9189776,15.6800000,,screenshots/G12.jpg,4x4 tablo
+B01,sinir-w-kucuk,a-priori,0.01,0.05,0.8,,1,78489,0.8000020,3.8414588,7.8489000,,screenshots/B01.jpg,d çok küçük karşılığı
+B02,sinir-w-kucuk,a-priori,0.001,0.05,0.8,,1,7848861,0.8000000,3.8414588,7.8488610,,screenshots/B02.jpg,G*Power üst N sınırı var mı?
+B03,sinir-w-buyuk,a-priori,2,0.05,0.8,,1,2,0.8074304,3.8414588,8.0000000,,screenshots/B03.jpg,N=2 bekleniyor
+B04,sinir-w-buyuk,a-priori,3,0.05,0.8,,1,1,0.8508388,3.8414588,9.0000000,,screenshots/B04.jpg,N=1 mi? alt sınır testi (LEDGER L-07)
+B05,sinir-w-buyuk,a-priori,5,0.05,0.8,,1,1,0.9988173,3.8414588,25.0000000,,screenshots/B05.jpg,N alt sınırı
+B06,sinir-guc,a-priori,0.3,0.05,0.051,,1,1,0.0603726,3.8414588,0.0900000,,screenshots/B06.jpg,güç α'nın hemen üstünde
+B07,sinir-guc,a-priori,0.3,0.05,0.999,,1,284,0.9990183,3.8414588,25.5600000,,screenshots/B07.jpg,
+B08,sinir-alfa,a-priori,0.3,0.001,0.8,,1,190,0.8008574,10.8275662,17.1000000,,screenshots/B08.jpg,
+B09,sinir-alfa,a-priori,0.3,0.5,0.8,,1,24,0.8027617,0.4549364,2.1600000,,screenshots/B09.jpg,büyük α
+B10,sinir-df,a-priori,0.3,0.05,0.8,,20,233,0.8002286,31.4104328,20.9700000,,screenshots/B10.jpg,
+B11,sinir-df,a-priori,0.3,0.05,0.8,,50,336,0.8006734,67.5048065,30.2400000,,screenshots/B11.jpg,
+I01,gecersiz,a-priori,0.3,0.05,0.05,,1,1,0.0603726,3.8414588,0.0900000,,screenshots/I01.jpg,güç = α: G*Power ne yapıyor?; Hata yok: güç = α kabul edildi
+I02,gecersiz,a-priori,0.3,0.05,0.04,,1,,,,,Power must be greater than or equal to alpha.,screenshots/I02.jpg,güç < α
+I03,gecersiz,a-priori,0,0.05,0.8,,1,,,,,Effect size w must be greater 1e-06.,screenshots/I03.jpg,w = 0
+I04,gecersiz,a-priori,-0.1,0.05,0.8,,1,,,,,Effect size w must be greater 1e-06.,screenshots/I04.jpg,negatif w
+I05,gecersiz,a-priori,0.3,0,0.8,,1,,,,,"Alpha is outside the admissible range (1e-07, 1).",screenshots/I05.jpg,α = 0
+I06,gecersiz,a-priori,0.3,1,0.8,,1,,,,,"Alpha is outside the admissible range (1e-07, 1).",screenshots/I06.jpg,α = 1
+I07,gecersiz,a-priori,0.3,0.05,0.8,,0,,,,,Degrees of Freedom must be greater or equal one.,screenshots/I07.jpg,df = 0
+I08,gecersiz,a-priori,0.3,0.05,0.8,,1.5,108,0.8036939,5.9914645,9.7200000,,screenshots/I08.jpg,"kesirli df: G*Power yuvarlıyor mu, reddediyor mu?; Hata yok: df=1.5 → 2'ye yuvarlandı (kritik χ² df=2 değeri)"
+I09,gecersiz,a-priori,0.3,0.05,1,,1,,,,,"Power is outside the admissible range (1e-07, 1).",screenshots/I09.jpg,güç = 1
+P01,post-hoc,post-hoc,0.3,0.05,,88,1,88,0.8035275,3.8414588,7.9200000,,screenshots/P01.jpg,G01'in tersi
+P02,post-hoc,post-hoc,0.3,0.05,,50,2,50,0.4604212,5.9914645,4.5000000,,screenshots/P02.jpg,
+P03,post-hoc,post-hoc,0.1,0.05,,100,1,100,0.1700750,3.8414588,1.0000000,,screenshots/P03.jpg,
+P04,post-hoc,post-hoc,0.5,0.05,,10,3,10,0.2330023,7.8147279,2.5000000,,screenshots/P04.jpg,
+P05,post-hoc-sinir,post-hoc,0,0.05,,100,1,100,0.0500000,3.8414588,0,,screenshots/P05.jpg,"w=0: güç = α mı?; Hata yok: post hoc w=0 kabul edildi, λ ekranda '0' olarak gösterildi"
+P06,post-hoc-sinir,post-hoc,0.3,0.05,,1,1,1,0.0603726,3.8414588,0.0900000,,screenshots/P06.jpg,N=1
+P07,post-hoc-gecersiz,post-hoc,0.3,0.05,,0,1,,,,,"Total sample size is outside the admissible range (1, 2147483646)",screenshots/P07.jpg,N=0
+P08,post-hoc-gecersiz,post-hoc,0.3,0.05,,50.5,1,50.5,0.5724114,3.8414588,4.5900000,,screenshots/P08.jpg,kesirli N; Hata yok: N=50.5 → 51'e yuvarlandı (λ=4.59=51·0.09; güç = N=51 gücü)
+E01,kesirli-df,a-priori,0.3,0.05,0.8,,1.4,88,0.8035275,3.8414588,7.9200000,,screenshots/E01.jpg,I08 sonrası eklendi: df yuvarlama kuralı; df=1.4 → 1
+E02,kesirli-df,a-priori,0.3,0.05,0.8,,1.6,108,0.8036939,5.9914645,9.7200000,,screenshots/E02.jpg,I08 sonrası eklendi: df yuvarlama kuralı; df=1.6 → 2
+E03,kesirli-df,a-priori,0.3,0.05,0.8,,2.5,122,0.8030869,7.8147279,10.9800000,,screenshots/E03.jpg,I08 sonrası eklendi: df yuvarlama kuralı; df=2.5 → 3 (yarım yukarı)
+E04,kesirli-df,a-priori,0.3,0.05,0.8,,0.6,88,0.8035275,3.8414588,7.9200000,,screenshots/E04.jpg,I08 sonrası eklendi: df yuvarlama kuralı; df=0.6 → 1 (doğrulama yuvarlamadan sonra)
+E05,kesirli-df,a-priori,0.3,0.05,0.8,,0.4,,,,,Degrees of Freedom must be greater or equal one.,screenshots/E05.jpg,I08 sonrası eklendi: df yuvarlama kuralı
