@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "powerchi"
+version = "1.0.0"
+description = "Chi-square contingency-table power analysis: clean-room rewrite of one G*Power 3.1.9.7 calculation (YZM301 Teardown Sprint, family K4)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["scipy>=1.11"]
+
+[project.optional-dependencies]
+mcp = ["mcp>=2.3,<3"]
+dev = ["pytest>=7", "statsmodels>=0.14"]
+
+[project.scripts]
+gpower-clone = "powerchi.cli:main"
+powerchi-mcp = "powerchi.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

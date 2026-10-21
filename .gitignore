@@ -1,0 +1,26 @@
+# G*Power binary ASLA repoya girmez (etik kural 2)
+GPower.exe
+*.exe
+*.msi
+GPower*/
+G*Power*/
+
+# Ghidra projeleri ve decompile çıktısı (teslim edilmez)
+*.gpr
+*.rep/
+ghidra_projects/
+decompile/
+*.c.txt
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.pytest_cache/
+build/
+dist/
+
+# Çalışma zamanı
+logs/
+.env

@@ -1,0 +1,2 @@
+id,mode,w,alpha,power,df,n_total,source
+D01,a-priori,0.3,0.05,0.80,1,88,"Newsom J., Power analysis examples (Portland State Univ.), G*Power 'Proportions > Multigroup: Goodness of fit', w=.3 df=1 -> N=88. https://web.pdx.edu/~newsomj/uvclass/ho_power%20examples.pdf"

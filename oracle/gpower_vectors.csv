@@ -1,0 +1,41 @@
+id,category,mode,w,alpha,power,n,df,gp_n_total,gp_power,gp_critical,gp_ncp,gp_message,screenshot,notes
+G01,mutlu-yol,a-priori,0.3,0.05,0.8,,1,,,,,,screenshots/G01.png,DOK vektörü: belgelenmiş N=88
+G02,mutlu-yol,a-priori,0.1,0.05,0.8,,1,,,,,,screenshots/G02.png,Cohen küçük etki
+G03,mutlu-yol,a-priori,0.5,0.05,0.8,,1,,,,,,screenshots/G03.png,Cohen büyük etki
+G04,mutlu-yol,a-priori,0.3,0.05,0.95,,5,,,,,,screenshots/G04.png,Kılavuz tarzı örnek
+G05,mutlu-yol,a-priori,0.3,0.05,0.9,,2,,,,,,screenshots/G05.png,2x3 tablo
+G06,mutlu-yol,a-priori,0.3,0.01,0.8,,3,,,,,,screenshots/G06.png,
+G07,mutlu-yol,a-priori,0.2,0.05,0.8,,4,,,,,,screenshots/G07.png,3x3 tablo
+G08,mutlu-yol,a-priori,0.1,0.05,0.95,,1,,,,,,screenshots/G08.png,
+G09,mutlu-yol,a-priori,0.5,0.01,0.99,,1,,,,,,screenshots/G09.png,
+G10,mutlu-yol,a-priori,0.3,0.1,0.8,,1,,,,,,screenshots/G10.png,
+G11,mutlu-yol,a-priori,0.25,0.05,0.9,,6,,,,,,screenshots/G11.png,
+G12,mutlu-yol,a-priori,0.4,0.05,0.8,,9,,,,,,screenshots/G12.png,4x4 tablo
+B01,sinir-w-kucuk,a-priori,0.01,0.05,0.8,,1,,,,,,screenshots/B01.png,d çok küçük karşılığı
+B02,sinir-w-kucuk,a-priori,0.001,0.05,0.8,,1,,,,,,screenshots/B02.png,G*Power üst N sınırı var mı?
+B03,sinir-w-buyuk,a-priori,2,0.05,0.8,,1,,,,,,screenshots/B03.png,N=2 bekleniyor
+B04,sinir-w-buyuk,a-priori,3,0.05,0.8,,1,,,,,,screenshots/B04.png,N=1 mi? alt sınır testi (LEDGER L-07)
+B05,sinir-w-buyuk,a-priori,5,0.05,0.8,,1,,,,,,screenshots/B05.png,N alt sınırı
+B06,sinir-guc,a-priori,0.3,0.05,0.051,,1,,,,,,screenshots/B06.png,güç α'nın hemen üstünde
+B07,sinir-guc,a-priori,0.3,0.05,0.999,,1,,,,,,screenshots/B07.png,
+B08,sinir-alfa,a-priori,0.3,0.001,0.8,,1,,,,,,screenshots/B08.png,
+B09,sinir-alfa,a-priori,0.3,0.5,0.8,,1,,,,,,screenshots/B09.png,büyük α
+B10,sinir-df,a-priori,0.3,0.05,0.8,,20,,,,,,screenshots/B10.png,
+B11,sinir-df,a-priori,0.3,0.05,0.8,,50,,,,,,screenshots/B11.png,
+I01,gecersiz,a-priori,0.3,0.05,0.05,,1,,,,,,screenshots/I01.png,güç = α: G*Power ne yapıyor?
+I02,gecersiz,a-priori,0.3,0.05,0.04,,1,,,,,,screenshots/I02.png,güç < α
+I03,gecersiz,a-priori,0,0.05,0.8,,1,,,,,,screenshots/I03.png,w = 0
+I04,gecersiz,a-priori,-0.1,0.05,0.8,,1,,,,,,screenshots/I04.png,negatif w
+I05,gecersiz,a-priori,0.3,0,0.8,,1,,,,,,screenshots/I05.png,α = 0
+I06,gecersiz,a-priori,0.3,1,0.8,,1,,,,,,screenshots/I06.png,α = 1
+I07,gecersiz,a-priori,0.3,0.05,0.8,,0,,,,,,screenshots/I07.png,df = 0
+I08,gecersiz,a-priori,0.3,0.05,0.8,,1.5,,,,,,screenshots/I08.png,"kesirli df: G*Power yuvarlıyor mu, reddediyor mu?"
+I09,gecersiz,a-priori,0.3,0.05,1,,1,,,,,,screenshots/I09.png,güç = 1
+P01,post-hoc,post-hoc,0.3,0.05,,88,1,,,,,,screenshots/P01.png,G01'in tersi
+P02,post-hoc,post-hoc,0.3,0.05,,50,2,,,,,,screenshots/P02.png,
+P03,post-hoc,post-hoc,0.1,0.05,,100,1,,,,,,screenshots/P03.png,
+P04,post-hoc,post-hoc,0.5,0.05,,10,3,,,,,,screenshots/P04.png,
+P05,post-hoc-sinir,post-hoc,0,0.05,,100,1,,,,,,screenshots/P05.png,w=0: güç = α mı?
+P06,post-hoc-sinir,post-hoc,0.3,0.05,,1,1,,,,,,screenshots/P06.png,N=1
+P07,post-hoc-gecersiz,post-hoc,0.3,0.05,,0,1,,,,,,screenshots/P07.png,N=0
+P08,post-hoc-gecersiz,post-hoc,0.3,0.05,,50.5,1,,,,,,screenshots/P08.png,kesirli N
