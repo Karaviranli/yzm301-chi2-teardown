@@ -67,17 +67,47 @@ def test_df_increases_n():
     assert ns == sorted(ns) and len(set(ns)) == 4
 
 
-# S-10..S-17 geçersiz girdiler
+# S-10 güç = α hata değildir (SPEC §3.7, kâhin I01)
+def test_power_equals_alpha_gives_n1():
+    r = engine.a_priori(0.3, 0.05, 0.05, 1)
+    assert r.n_total == 1
+    assert round(r.actual_power, 7) == 0.0603726
+
+
+# S-11 kesirli df en yakın tam sayıya yuvarlanır, .5 yukarı (SPEC §4b)
+@pytest.mark.parametrize("df,dfk,n", [(0.6, 1, 88), (1.4, 1, 88), (1.5, 2, 108), (1.6, 2, 108), (2.5, 3, 122)])
+def test_fractional_df_rounds_half_up(df, dfk, n):
+    r = engine.a_priori(0.3, 0.05, 0.80, df)
+    assert r.df == dfk and r.n_total == n
+    assert engine.post_hoc(0.3, 0.05, 88, df).df == dfk
+
+
+# S-12 post hoc kesirli N en yakın tam sayıya yuvarlanır (SPEC §4, kâhin P08)
+def test_post_hoc_fractional_n_rounds_half_up():
+    r = engine.post_hoc(0.3, 0.05, 50.5, 1)
+    assert r.n_total == 51
+    assert round(r.ncp, 4) == 4.59
+    assert round(r.power, 7) == 0.5724114
+    assert engine.post_hoc(0.3, 0.05, 50.4, 1).n_total == 50
+
+
+def test_post_hoc_n_upper_bound():
+    assert engine.post_hoc(0.3, 0.05, engine.N_MAX_POST_HOC, 1).n_total == engine.N_MAX_POST_HOC
+    with pytest.raises(InputError, match="arasında"):
+        engine.post_hoc(0.3, 0.05, engine.N_MAX_POST_HOC + 1, 1)
+
+
+# Geçersiz girdiler (SPEC §6, §8 "Geçersiz girdi")
 @pytest.mark.parametrize("kw,msg", [
-    (dict(w=0.3, alpha=0.05, power=0.05, df=1), "alpha'dan"),
     (dict(w=0.3, alpha=0.05, power=0.04, df=1), "alpha'dan"),
-    (dict(w=0, alpha=0.05, power=0.8, df=1), "w = 0"),
-    (dict(w=-0.1, alpha=0.05, power=0.8, df=1), "negatif"),
+    (dict(w=0, alpha=0.05, power=0.8, df=1), "büyük olmalı"),
+    (dict(w=1e-6, alpha=0.05, power=0.8, df=1), "büyük olmalı"),
+    (dict(w=-0.1, alpha=0.05, power=0.8, df=1), "büyük olmalı"),
     (dict(w=0.3, alpha=0, power=0.8, df=1), "alpha"),
     (dict(w=0.3, alpha=1, power=0.8, df=1), "alpha"),
     (dict(w=0.3, alpha=0.05, power=1, df=1), "power"),
     (dict(w=0.3, alpha=0.05, power=0.8, df=0), "df"),
-    (dict(w=0.3, alpha=0.05, power=0.8, df=1.5), "tam sayı"),
+    (dict(w=0.3, alpha=0.05, power=0.8, df=0.4), "df"),
     (dict(w=float("nan"), alpha=0.05, power=0.8, df=1), "sonlu"),
     (dict(w="abc", alpha=0.05, power=0.8, df=1), "sayısal"),
 ])
@@ -86,15 +116,20 @@ def test_invalid_a_priori(kw, msg):
         engine.a_priori(**kw)
 
 
-@pytest.mark.parametrize("n", [0, -5, 50.5])
+@pytest.mark.parametrize("n", [0, 0.4, -5])
 def test_invalid_post_hoc_n(n):
     with pytest.raises(InputError):
         engine.post_hoc(0.3, 0.05, n, 1)
 
 
+def test_post_hoc_negative_w():
+    with pytest.raises(InputError, match="negatif"):
+        engine.post_hoc(-0.1, 0.05, 100, 1)
+
+
 def test_unreachable_n():
     with pytest.raises(InputError, match="sağlanamıyor"):
-        engine.a_priori(1e-6, 0.05, 0.99, 1)
+        engine.a_priori(1e-5, 0.05, 0.99, 1)
 
 
 # Etki büyüklüğü

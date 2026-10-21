@@ -27,6 +27,8 @@ TEST_ID = "chi2-contingency"
 # REA/kâhin ile doğrulanmalı (LEDGER L-07). Değiştirmek için tek yer burası.
 N_MIN = 1
 N_MAX = 100_000_000  # bundan büyük N "ulaşılamaz" kabul edilir (SPEC §3.5)
+N_MAX_POST_HOC = 2_147_483_646  # post hoc N üst sınırı (SPEC §4)
+W_MIN_A_PRIORI = 1e-6  # a priori w bu değerden büyük olmalı (SPEC §6)
 
 DEFAULT_PRECISION = 4  # CLI sözleşmesindeki örnek çıktı 4 basamak kullanıyor
 
@@ -56,32 +58,40 @@ def _check_alpha(alpha) -> float:
     return a
 
 
+def _round_half_up(v: float) -> int:
+    """En yakın tam sayı; .5 yukarı gider (SPEC §4, §4b). Python'un round()'u
+    bankacı yuvarlaması yaptığı için kullanılmaz."""
+    return int(math.floor(v + 0.5))
+
+
 def _check_df(df) -> int:
-    d = _finite("df", df)
-    if d != int(d):
-        raise InputError(f"df tam sayı olmalı (verilen: {df})")
-    d = int(d)
+    # SPEC §4b: kesirli df en yakın tam sayıya yuvarlanır, df ≥ 1 kontrolü SONRA.
+    raw = _finite("df", df)
+    d = _round_half_up(raw)
     if d < 1:
-        raise InputError(f"df en az 1 olmalı (verilen: {d})")
+        raise InputError(f"df en az 1 olmalı (verilen: {raw:.15g}, yuvarlanmış: {d})")
     return d
 
 
-def _check_w(w, *, allow_zero: bool) -> float:
+def _check_w(w, *, a_priori: bool) -> float:
+    # SPEC §6: a priori w ≤ 1e-6 hata; post hoc yalnızca w < 0 hata (w = 0 → güç = α).
     v = _finite("w", w)
-    if v < 0:
+    if a_priori:
+        if v <= W_MIN_A_PRIORI:
+            raise InputError(f"a priori modda w {W_MIN_A_PRIORI:g}'dan büyük olmalı (verilen: {v})")
+    elif v < 0:
         raise InputError(f"w negatif olamaz (verilen: {v})")
-    if v == 0 and not allow_zero:
-        raise InputError("w = 0 iken hiçbir N hedef güce ulaşamaz (a priori tanımsız)")
     return v
 
 
 def _check_n(n) -> int:
-    v = _finite("n", n)
-    if v != int(v):
-        raise InputError(f"n (toplam örneklem) tam sayı olmalı (verilen: {n})")
-    v = int(v)
-    if v < 1:
-        raise InputError(f"n en az 1 olmalı (verilen: {v})")
+    # SPEC §4: kesirli N en yakın tam sayıya yuvarlanır (.5 yukarı), aralık kontrolü SONRA.
+    raw = _finite("n", n)
+    v = _round_half_up(raw)
+    if not (N_MIN <= v <= N_MAX_POST_HOC):
+        raise InputError(
+            f"n (toplam örneklem) {N_MIN} ile {N_MAX_POST_HOC} arasında olmalı (verilen: {raw:.15g}, yuvarlanmış: {v})"
+        )
     return v
 
 
@@ -153,15 +163,14 @@ def a_priori(w, alpha, power, df, *, n_min: int = N_MIN, n_max: int = N_MAX) -> 
     bulunur, ardından tam sayılar üzerinde ikili arama yapılır. Sonuç, kesirli
     N'nin tavanı ile aynıdır ama kesirli kökün kayan nokta hatasından etkilenmez.
     """
-    w = _check_w(w, allow_zero=False)
+    w = _check_w(w, a_priori=True)
     alpha = _check_alpha(alpha)
     target = _finite("power", power)
     if not (0.0 < target < 1.0):
         raise InputError(f"power 0 ile 1 arasında (uçlar hariç) olmalı (verilen: {target})")
-    if target <= alpha:
-        raise InputError(
-            f"power ({target}) alpha'dan ({alpha}) büyük olmalı; aksi hâlde N=0 bile yeterlidir ve a priori tanımsızdır"
-        )
+    # SPEC §3.7: güç = α geçerlidir (güç(1) > α olduğundan N = 1 çıkar).
+    if target < alpha:
+        raise InputError(f"power ({target}) alpha'dan ({alpha}) küçük olamaz")
     df = _check_df(df)
 
     def ok(n: int) -> bool:
@@ -198,7 +207,7 @@ def a_priori(w, alpha, power, df, *, n_min: int = N_MIN, n_max: int = N_MAX) -> 
 
 
 def post_hoc(w, alpha, n, df) -> PostHocResult:
-    w = _check_w(w, allow_zero=True)
+    w = _check_w(w, a_priori=False)
     alpha = _check_alpha(alpha)
     n = _check_n(n)
     df = _check_df(df)

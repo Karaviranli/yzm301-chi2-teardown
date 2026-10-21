@@ -1,5 +1,20 @@
 # Ajan maliyet ve süreç günlüğü
 
+## Oturum 2b: Düzeltme turu (SPEC güncellemesi sonrası)
+
+| Alan | Değer |
+|---|---|
+| Ajan | Claude (model `claude-opus-5-5`), Claude uygulamasında inceleme oturumunun başlattığı ayrı yazım oturumu (Claude Code) |
+| Girdi | Yalnızca güncellenmiş `SPEC.md` + kendi kodu (`src/`, `tests/`). LEDGER, ekran görüntüleri, HALLUCINATIONS ve decompile çıktısı OKUNMADI. |
+| Yaklaşık token | ≈ 60 bin (oturumun bağlam sayacından; araç çıktıları dahil) |
+| Yaklaşık maliyet | Abonelik kapsamında; API fiyatıyla kabaca 1 USD mertebesi (tahmin) |
+| İterasyon | Motor 1 tur (§3.7, §4, §4b, §6); test paketi 3 çalıştırma (91 geçen + 2 düşen → 93 geçen). Düşenler: MCP'nin `n=0`'ı `0.0` olarak iletmesiyle hata mesajı paritesinin bozulması, şema testinde yanlış öznitelik adı (`inputSchema` → `input_schema`) |
+| Sonuç | diff_report a priori N: 31/37 (%83,8) → **37/37 (%100)**; tüm alanlarda 45/45 |
+
+**Neyi farklı yapardım:**
+1. Hata mesajlarına ham girdi metnini değil, ayrıştırılmış sayıyı yazdırırdım. Böylece CLI (metin) ve MCP (sayı) aynı mesajı en baştan üretir.
+2. "Katı ol, sonra gevşet" yerine sınır davranışlarını (güç = α, kesirli df/N) ilk motorda açık soru olarak işaretleyip kâhin gelene kadar ayrı bir bayrağa bağlardım.
+
 ## Oturum 2: Yazım (motor, CLI, MCP, ajan, testler, belgeler)
 
 | Alan | Değer |

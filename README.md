@@ -78,18 +78,18 @@ gpower-clone --test chi2-contingency --mode effect-size --rates 0.40,0.25 --weig
 gpower-clone --test chi2-contingency --mode effect-size --table "0.3,0.2;0.2,0.3"
 
 # Geçersiz girdi → {"error": "..."} ve çıkış kodu 2
-gpower-clone --test chi2-contingency --mode a-priori --w 0.3 --alpha 0.05 --power 0.05 --df 1
+gpower-clone --test chi2-contingency --mode a-priori --w 0.3 --alpha 0.05 --power 0.04 --df 1
 ```
 
 | Parametre | Anlam |
 |---|---|
 | `--test` | `chi2-contingency` |
 | `--mode` | `a-priori` · `post-hoc` · `effect-size` |
-| `--w` | Cohen w (> 0; post hoc'ta 0 olabilir) |
+| `--w` | Cohen w (a priori > 1e-6; post hoc ≥ 0) |
 | `--alpha` | (0, 1) |
-| `--power` | (α, 1), a priori |
-| `--n` | toplam N (tam sayı ≥ 1), post hoc |
-| `--df` | (satır−1)(sütun−1), tam sayı ≥ 1 |
+| `--power` | [α, 1), a priori (güç = α geçerli → N = 1) |
+| `--n` | toplam N, post hoc; kesirli değer en yakın tam sayıya yuvarlanır (.5 yukarı), yuvarlanmış N ∈ [1, 2 147 483 646], `n_total` yuvarlanmış değerdir |
+| `--df` | (satır−1)(sütun−1); kesirli değer en yakın tam sayıya yuvarlanır (.5 yukarı), yuvarlanmış df ≥ 1, çıktıdaki `df` yuvarlanmış değerdir |
 | `--precision` | çıktı ondalığı, varsayılan 4 |
 
 Kurulum yapmadan: `python -m powerchi ...` (repo kökünde `PYTHONPATH=src`) ya da Windows'ta `gpower-clone.cmd ...`.
@@ -119,9 +119,9 @@ Claude Desktop / Claude Code yapılandırması:
 | `mode` | string | ✓ | `a-priori` / `post-hoc` |
 | `w` | number | ✓ | Cohen w |
 | `alpha` | number | ✓ | I. tip hata |
-| `df` | integer | ✓ | serbestlik derecesi |
+| `df` | number | ✓ | serbestlik derecesi (kesirliyse en yakın tam sayıya, .5 yukarı) |
 | `power` | number | a priori | hedef güç |
-| `n` | integer | post hoc | toplam N |
+| `n` | number | post hoc | toplam N (kesirliyse en yakın tam sayıya, .5 yukarı) |
 
 Çıktı: CLI ile **birebir aynı** JSON. A priori: `{n_total, actual_power, critical, df, ncp}` · Post hoc: `{n_total, power, critical, df, ncp}` · Hata: `{error}`.
 
@@ -135,7 +135,7 @@ Claude Desktop / Claude Code yapılandırması:
 
 Çıktı: `{w, df, rows, cols}` ya da `{error}`.
 
-Parite: `tests/test_mcp_parity.py` 12 vektörü (geçersizler dahil) hem CLI'ye (alt süreç) hem MCP'ye gönderir; çıktılar birebir aynıdır.
+Parite: `tests/test_mcp_parity.py` 19 vektörü (geçersizler dahil) hem CLI'ye (alt süreç) hem MCP'ye gönderir; çıktılar birebir aynıdır.
 
 ## AI ajanı
 
@@ -154,7 +154,7 @@ Token karşılaştırması: `python agent_eval/token_compare.py` → `agent_eval
 ## Testler ve diferansiyel test
 
 ```bash
-python -m pytest -q                  # 69 test: motor, CLI sözleşmesi, 630 kütüphane vektörü, MCP paritesi, ajan tesisatı
+python -m pytest -q                  # 93 test: motor, CLI sözleşmesi, 630 kütüphane vektörü, MCP paritesi, ajan tesisatı
 python tests/diff_report.py          # → tests/UYUM_RAPORU.md (G*Power, [DOK] ve kütüphane kâhinleri)
 python oracle/gen_library_vectors.py # 630 ölçek vektörünü yeniden üretir (statsmodels kuruluysa onu da ekler)
 ```

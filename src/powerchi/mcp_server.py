@@ -32,12 +32,12 @@ server = MCPServer(
         "Chi-square test for contingency tables (G*Power: 'Goodness-of-fit tests: Contingency tables'). "
         "mode='a-priori' -> required total sample size N for target power; "
         "mode='post-hoc' -> achieved power for a given total N. "
-        "df = (rows-1)*(cols-1); for k groups x binary response df = k-1. "
+        "df = (rows-1)*(cols-1); for k groups x binary response df = k-1. Fractional df and n are rounded to the nearest integer (.5 up). "
         "Returns the exact same JSON as the gpower-clone CLI, or {'error': ...}."
     ),
 )
-def chi2_contingency_power(mode: str, w: float, alpha: float, df: int,
-                           power: Optional[float] = None, n: Optional[int] = None) -> dict:
+def chi2_contingency_power(mode: str, w: float, alpha: float, df: float,
+                           power: Optional[float] = None, n: Optional[float] = None) -> dict:
     try:
         return engine.compute(mode, w=w, alpha=alpha, power=power, df=df, n=n)
     except engine.InputError as e:

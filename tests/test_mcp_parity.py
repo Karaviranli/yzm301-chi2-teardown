@@ -29,10 +29,17 @@ VECTORS = [
     dict(mode="post-hoc", w=0.3, alpha=0.05, n=88, df=1),
     dict(mode="post-hoc", w=0.5, alpha=0.05, n=10, df=3),
     dict(mode="post-hoc", w=0, alpha=0.05, n=100, df=1),
+    dict(mode="a-priori", w=0.3, alpha=0.05, power=0.05, df=1),  # S-10
+    dict(mode="a-priori", w=0.3, alpha=0.05, power=0.8, df=1.5),  # S-11
+    dict(mode="a-priori", w=0.3, alpha=0.05, power=0.8, df=2.5),  # S-11
+    dict(mode="post-hoc", w=0.3, alpha=0.05, n=50.5, df=1),  # S-12
     # geçersiz girdiler: ikisi de hata vermeli
-    dict(mode="a-priori", w=0.3, alpha=0.05, power=0.05, df=1),
+    dict(mode="a-priori", w=0.3, alpha=0.05, power=0.04, df=1),
     dict(mode="a-priori", w=0, alpha=0.05, power=0.8, df=1),
+    dict(mode="post-hoc", w=-0.1, alpha=0.05, n=100, df=1),
+    dict(mode="a-priori", w=0.3, alpha=0.05, power=0.8, df=0.4),
     dict(mode="post-hoc", w=0.3, alpha=0.05, n=0, df=1),
+    dict(mode="post-hoc", w=0.3, alpha=0.05, n=0.4, df=1),
 ]
 
 
@@ -65,6 +72,18 @@ async def _call_all(calls):
 
 def mcp_calls(calls):
     return asyncio.run(_call_all(calls))
+
+
+def test_schema_df_n_are_number():
+    async def go():
+        async with mcp.Client(server) as c:
+            return {t.name: t.input_schema for t in (await c.list_tools()).tools}
+    props = asyncio.run(go())["chi2_contingency_power"]["properties"]
+
+    def types(p):
+        return {p.get("type")} | {x.get("type") for x in p.get("anyOf", [])}
+    assert "number" in types(props["df"]) and "integer" not in types(props["df"])
+    assert "number" in types(props["n"]) and "integer" not in types(props["n"])
 
 
 def test_tools_listed():
